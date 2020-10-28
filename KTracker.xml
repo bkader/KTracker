@@ -1,0 +1,733 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="KTracker.lua" />
+
+	<GameTooltip name="KTrackerTooltip" inherits="GameTooltipTemplate" parent="UIParent" hidden="true" />
+
+	<!-- Group Template -->
+	<Frame name="KTrackerGroupTemplate" parent="UIParent" enableMouse="false" clampedToScreen="true" toplevel="true" movable="true" virtual="true">
+		<Size><AbsDimension x="1" y="1" /></Size>
+		<Anchors><Anchor point="CENTER" relativeTo="$parent" relativePoint="CENTER" /></Anchors>
+		<Layers>
+			<Layer level="OVERLAY">
+				<FontString name="$parentTitle" text="KTracker Group" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="TOP">
+							<Offset><AbsDimension x="0" y="12" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentResizer">
+				<Size><AbsDimension x="10" y="10" /></Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset><AbsDimension x="3" y="-3" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentTexture" file="Interface\AddOns\!KTracker\tex_resize">
+							<Size><AbsDimension x="10" y="10" /></Size>
+						</Texture>
+					</Layer>
+				</Layers>
+				<HighlightTexture file="Interface\AddOns\!KTracker\tex_resize" mod="ADD" />
+			</Button>
+		</Frames>
+	</Frame>
+
+	<!-- Icon Template -->
+	<Frame name="KTrackerIconTemplate" enableMouse="true" virtual="true">
+		<Size><AbsDimension x="36" y="36" /></Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentIcon">
+					<Size><AbsDimension x="34" y="34" /></Size>
+					<Anchors><Anchor point="CENTER" /></Anchors>
+				</Texture>
+				<FontString name="$parentStacks" inherits="NumberFontNormalSmall" justifyH="RIGHT">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT">
+							<Offset><AbsDimension x="-1" y="1" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Cooldown name="$parentCooldown" inherits="CooldownFrameTemplate">
+				<Size><AbsDimension x="36" y="36" /></Size>
+				<Anchors><Anchor point="CENTER" /></Anchors>
+			</Cooldown>
+		</Frames>
+		<NormalTexture file="Interface\Buttons\UI-Quickslot" />
+		<HighlightTexture file="Interface\Buttons\ButtonHilight-Square" alphaMode="ADD" />
+	</Frame>
+
+	<!-- Cooldown Template -->
+	<Frame name="KTrackerCooldownTemplate" hidden="true" virtual="true">
+		<Size><AbsDimension x="32" y="32" /></Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="GameFontHighlight" justifyH="CENTER">
+					<Anchors><Anchor point="CENTER" /></Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+
+	<!-- Default Frames Template -->
+	<Frame name="KTrackerFrameTemplate" inherits="UIPanelDialogTemplate" parent="UIParent" movable="true" frameStrata="MEDIUM" toplevel="true" hidden="true" clampedToScreen="true" virtual="true">
+		<Size><AbsDimension x="230" y="230" /></Size>
+		<Anchors><Anchor point="CENTER" relativePoint="CENTER" /></Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString inherits="GameFontNormalSmall" name="$parentTitle" text="|cfff58cbaK|r|caaf49141Tracker|r - Made with love by |cfff58cbaKader|r (|cffffffffNovus Ordo|r @ |cff996019Warmane|r-Icecrown)">
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentTitleBG" relativePoint="LEFT">
+							<Offset><AbsDimension x="5" y="1" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnDragStart>self:StartMoving()</OnDragStart>
+			<OnDragStop>self:StopMovingOrSizing()</OnDragStop>
+		</Scripts>
+	</Frame>
+
+	<!-- Default buttons template -->
+	<Button name="KTrackerButtonTemplate" virtual="true">
+		<Size><AbsDimension x="25" y="25" /></Size>
+		<NormalFont style="GameFontNormalSmall" />
+		<DisabledFont style="GameFontDisableSmall" />
+		<HighlightFont style="GameFontHighlightSmall" />
+		<ButtonText name="$parentText">
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset><AbsDimension x="5" y="0" /></Offset>
+				</Anchor>
+				<Anchor point="RIGHT">
+					<Offset><AbsDimension x="-5" y="0" /></Offset>
+				</Anchor>
+			</Anchors>
+		</ButtonText>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size><AbsDimension x="12" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" />
+						<Anchor point="BOTTOMLEFT" />
+					</Anchors>
+					<TexCoords left="0" right="0.09374" top="0" bottom="0.6875" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size><AbsDimension x="12" /></Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT" />
+						<Anchor point="BOTTOMRIGHT" />
+					</Anchors>
+					<TexCoords left="0.53125" right="0.625" top="0" bottom="0.6875" />
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Buttons\UI-Panel-Button-Up">
+					<Size><AbsDimension x="12" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset><AbsDimension x="12" y="0" /></Offset>
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset><AbsDimension x="-12" y="0" /></Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.09375" right="0.53125" top="0" bottom="0.6875" />
+				</Texture>
+			</Layer>
+		</Layers>
+		<HighlightTexture inherits="UIPanelButtonHighlightTexture" mod="ADD" />
+		<PushedTexture inherits="UIPanelButtonPushedTexture" mod="ADD" />
+		<DisabledTexture inherits="UIPanelButtonDisabledTexture" />
+		<Scripts><OnLoad>self:RegisterForClicks("AnyUp")</OnLoad></Scripts>
+	</Button>
+
+	<!-- ScrollFrame template -->
+	<ScrollFrame name="KTrackerScrolLFrameTemplate" inherits="UIPanelScrollFrameTemplate" virtual="true">
+		<ScrollChild>
+			<Frame name="$parentScrollChild" setAllPoints="$parent">
+				<Anchors>
+					<Anchor point="TOPLEFT" />
+					<Anchor point="BOTTOMRIGHT" />
+				</Anchors>
+			</Frame>
+		</ScrollChild>
+	</ScrollFrame>
+
+	<!-- EditBox Template -->
+    <EditBox name="KTrackerEditBoxTemplate" inherits="InputBoxTemplate" autoFocus="false" virtual="true">
+        <FontString inherits="GameFontHighlight" />
+        <Scripts><OnEscapePressed>self:ClearFocus()</OnEscapePressed></Scripts>
+    </EditBox>
+
+	<Frame name="KTrackerSliderTemplate" virtual="true">
+		<Size><AbsDimension x="65" y="25" /></Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="GameFontHighlight" justifyH="CENTER" text="1">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="CENTER" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentLeft">
+				<Size><AbsDimension x="20" y="20" /></Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
+						<Offset><AbsDimension x="3" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up" />
+				<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Down" />
+				<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Disabled" />
+				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
+			</Button>
+			<Button name="$parentRight">
+				<Size><AbsDimension x="20" y="20" /></Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT">
+						<Offset><AbsDimension x="-3" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up" />
+				<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down" />
+				<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Disabled" />
+				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD" />
+			</Button>
+		</Frames>
+	</Frame>
+
+	<CheckButton name="KTrackerCheckButtonTemplate" inherits="InterfaceOptionsCheckButtonTemplate" virtual="true">
+		<Size><AbsDimension x="20" y="20" /></Size>
+	</CheckButton>
+
+	<Button name="KTrackerMinimap" parent="Minimap" movable="true" userPlaced="true" frameStrata="MEDIUM" hidden="false">
+		<Size><AbsDimension x="33" y="33" /></Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset><AbsDimension x="-65.35" y="-38.8" /></Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIcon" file="Interface\ICONS\Ability_druid_naturalperfection">
+					<Size><AbsDimension x="22" y="22" /></Size>
+					<Anchors><Anchor point="CENTER" /></Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+					<Size><AbsDimension x="56" y="56" /></Size>
+					<Anchors><Anchor point="TOPLEFT" /></Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<HighlightTexture file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" alphaMode="ADD" />
+		<Scripts><OnLoad>KTracker:OnLoadMinimap(self)</OnLoad></Scripts>
+	</Button>
+
+	<!-- Table header template -->
+	<Button name="KTrackerTableHeader" virtual="true">
+		<Size><AbsDimension x="10" y="19" /></Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size><AbsDimension x="5" y="19" /></Size>
+					<Anchors><Anchor point="TOPLEFT"/></Anchors>
+					<TexCoords left="0" right="0.078125" top="0" bottom="0.59375"/>
+				</Texture>
+				<Texture name="$parentRight" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size><AbsDimension x="4" y="19" /></Size>
+					<Anchors><Anchor point="TOPRIGHT" /></Anchors>
+					<TexCoords left="0.90625" right="0.96875" top="0" bottom="0.59375"/>
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size><AbsDimension x="10" y="19" /></Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+						<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT"/>
+					</Anchors>
+					<TexCoords left="0.078125" right="0.90625" top="0" bottom="0.59375"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<ButtonText name="$parentText">
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset><AbsDimension x="8" y="0" /></Offset>
+				</Anchor>
+			</Anchors>
+		</ButtonText>
+		<NormalFont style="GameFontHighlightSmall"  />
+		<HighlightTexture file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD">
+			<Size><AbsDimension x="5" y="24" /></Size>
+			<Anchors>
+				<Anchor point="LEFT">
+					<Offset><AbsDimension x="0" y="0" /></Offset>
+				</Anchor>
+				<Anchor point="RIGHT">
+					<Offset><AbsDimension x="4" y="0" /></Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+	</Button>
+
+	<Button name="KTrackerGroupButtonTemplate" virtual="true">
+		<Size><AbsDimension y="20" /></Size>
+		<NormalFont style="GameFontNormalSmall" />
+		<DisabledFont style="GameFontDisableSmall" />
+		<HighlightFont style="GameFontHighlightSmall" />
+		<Anchors>
+			<Anchor point="LEFT">
+				<Offset><AbsDimension x="5" y="0" /></Offset>
+			</Anchor>
+			<Anchor point="RIGHT">
+				<Offset><AbsDimension x="-5" y="0" /></Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\AuctionFrame\UI-AuctionItemNameFrame">
+					<Size><AbsDimension x="10" y="23" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset><AbsDimension x="0" y="2" /></Offset>
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset><AbsDimension x="0" y="0" /></Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords top="0" right="0.75" bottom="1.0" left="0.078125" />
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentID" inherits="GameFontHighlightSmall" justifyH="LEFT" text="Group Name">
+					<Size><AbsDimension x="35" y="10" /></Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset><AbsDimension x="5" y="0" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentName" inherits="GameFontNormalSmall" justifyH="LEFT" text="Group Name">
+					<Size><AbsDimension x="105" y="10" /></Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentID" relativePoint="RIGHT" />
+					</Anchors>
+				</FontString>
+				<FontString name="$parentSize" inherits="GameFontHighlightSmall" justifyH="CENTER" text="Size">
+					<Size><AbsDimension x="48" y="10" /></Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentName" relativePoint="RIGHT" />
+					</Anchors>
+				</FontString>
+				<FontString name="$parentSpec" inherits="GameFontHighlightSmall" justifyH="CENTER" text="Talents Spec">
+					<Size><AbsDimension x="60" y="10" /></Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentSize" relativePoint="RIGHT">
+							<AbsDimension x="5" y="0" />
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentCombat" inherits="GameFontHighlightSmall" justifyH="CENTER" text="NO">
+					<Size><AbsDimension x="55" y="10" /></Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentSpec" relativePoint="RIGHT">
+							<AbsDimension x="5" y="0" />
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentEnabled" inherits="GameFontHighlightSmall" justifyH="CENTER" text="NO">
+					<Size><AbsDimension x="60" y="10" /></Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentCombat" relativePoint="RIGHT">
+							<AbsDimension x="5" y="0" />
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<HighlightTexture>
+			<Anchors>
+				<Anchor point="TOPLEFT" />
+				<Anchor point="BOTTOMRIGHT" />
+			</Anchors>
+			<Color r="1" g="0.8" b="0" a="0.1" />
+		</HighlightTexture>
+		<Scripts><OnLoad>self:RegisterForClicks("AnyUp")</OnLoad></Scripts>
+	</Button>
+
+	<Frame name="KTrackerConfigFrame" inherits="KTrackerFrameTemplate" frameStrata="HIGH">
+		<Size><AbsDimension x="590" y="355" /></Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Background">
+					<Size><AbsDimension x="10" y="22" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset><AbsDimension x="8" y="-32" /></Offset>
+						</Anchor>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset><AbsDimension x="-425" y="8" /></Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+
+				<!-- Groups Count -->
+				<FontString name="$parentCountLabel" inherits="GameFontNormalSmall" text="Groups: 0" justifyH="RIGHT">
+					<Anchors>
+						<Anchor point="TOPRIGHT">
+							<Offset><AbsDimension x="-35" y="-10" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<!-- Group Name -->
+				<FontString name="$parentNameLabel" inherits="GameFontNormal" text="Group Name" justifyH="CENTER">
+					<Size><AbsDimension x="125" y="10" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset><AbsDimension x="25" y="-35" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<!-- Group Spec -->
+				<FontString name="$parentSpecLabel" inherits="GameFontNormal" text="Talents Spec" justifyH="CENTER">
+					<Size><AbsDimension x="125" y="20" /></Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentNameLabel" relativePoint="BOTTOM">
+							<Offset><AbsDimension x="0" y="-28" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<!-- Group Columns -->
+				<FontString name="$parentColumnsLabel" inherits="GameFontNormal" text="Columns" justifyH="CENTER">
+					<Size><AbsDimension x="65" y="10" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentSpecLabel" relativePoint="BOTTOMLEFT">
+							<Offset><AbsDimension x="-5" y="-32" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<!-- Group Rows -->
+				<FontString name="$parentRowsLabel" inherits="GameFontNormal" text="Rows" justifyH="CENTER">
+					<Size><AbsDimension x="65" y="10" /></Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT" relativeTo="$parentSpecLabel" relativePoint="BOTTOMRIGHT">
+							<Offset><AbsDimension x="5" y="-32" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<!-- Horizontal Spacing -->
+				<FontString name="$parentHSpacingLabel" inherits="GameFontNormal" text="Spacing H" justifyH="LEFT">
+					<Size><AbsDimension x="120" y="10" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentColumnsLabel" relativePoint="BOTTOMLEFT">
+							<Offset><AbsDimension x="0" y="-40" /></Offset>
+						</Anchor>
+						<Anchor point="TOPRIGHT" relativeTo="$parentRowsLabel" relativePoint="BOTTOMRIGHT">
+							<Offset><AbsDimension x="0" y="-40" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<!-- Vertical Spacing -->
+				<FontString name="$parentVSpacingLabel" inherits="GameFontNormal" text="Spacing V" justifyH="LEFT">
+					<Size><AbsDimension x="120" y="10" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentHSpacingLabel" relativePoint="BOTTOMLEFT">
+							<Offset><AbsDimension x="0" y="-38" /></Offset>
+						</Anchor>
+						<Anchor point="TOPRIGHT" relativeTo="$parentRowsLabel" relativePoint="BOTTOMRIGHT">
+							<Offset><AbsDimension x="0" y="-38" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<!-- enable -->
+				<FontString name="$parentEnabledLabel" inherits="GameFontHighlight" text="Enable Group" justifyH="LEFT">
+					<Size><AbsDimension x="125" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentVSpacingLabel" relativePoint="BOTTOMLEFT">
+							<Offset><AbsDimension x="15" y="-35" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+
+				<!-- combat -->
+				<FontString name="$parentCombatLabel" inherits="GameFontHighlight" text="Only in Combat" justifyH="LEFT">
+					<Size><AbsDimension x="125" /></Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentEnabledLabel" relativePoint="BOTTOMLEFT">
+							<Offset><AbsDimension x="0" y="-10" /></Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+
+			<!-- List of groups -->
+			<ScrollFrame name="$parentScrollFrame" inherits="KTrackerScrolLFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset><AbsDimension x="175" y="-55" /></Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset><AbsDimension x="-35" y="45" /></Offset>
+					</Anchor>
+				</Anchors>
+			</ScrollFrame>
+
+			<Button name="$parentHeaderID" inherits="KTrackerTableHeader" text="ID">
+				<Size><AbsDimension x="35" y="20" /></Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="$parentScrollFrame" relativePoint="TOPLEFT">
+						<Offset><AbsDimension x="0" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Button name="$parentHeaderName" inherits="KTrackerTableHeader" text="NAME">
+				<Size><AbsDimension x="110" y="20" /></Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentHeaderID" relativePoint="RIGHT">
+						<Offset><AbsDimension x="0" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Button name="$parentHeaderSize" inherits="KTrackerTableHeader" text="Size">
+				<Size><AbsDimension x="50" y="20" /></Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentHeaderName" relativePoint="RIGHT">
+						<Offset><AbsDimension x="0" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Button name="$parentHeaderSpec" inherits="KTrackerTableHeader" text="Spec">
+				<Size><AbsDimension x="65" y="20" /></Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentHeaderSize" relativePoint="RIGHT">
+						<Offset><AbsDimension x="0" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Button name="$parentHeaderCombat" inherits="KTrackerTableHeader" text="Combat">
+				<Size><AbsDimension x="60" y="20" /></Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentHeaderSpec" relativePoint="RIGHT">
+						<Offset><AbsDimension x="0" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Button name="$parentHeaderEnabled" inherits="KTrackerTableHeader" text="Enabled">
+				<Size><AbsDimension x="65" y="20" /></Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentHeaderCombat" relativePoint="RIGHT">
+						<Offset><AbsDimension x="0" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<!-- Group ID -->
+			<EditBox name="$parentID" inherits="KTrackerEditBoxTemplate" numeric="true" hidden="true" />
+
+			<!-- Group Name -->
+			<EditBox name="$parentName" inherits="KTrackerEditBoxTemplate" maxLetters="5">
+				<Size><AbsDimension x="130" y="25" /></Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentNameLabel" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-5" /></Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+
+			<Frame name="$parentSpecDropDown" inherits="UIDropDownMenuTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentSpecLabel" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="-20" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+
+			<!-- Columns -->
+			<Frame name="$parentColumns" inherits="KTrackerSliderTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parentColumnsLabel" relativePoint="BOTTOM">
+						<Offset><AbsDimension x="0" y="-5" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+
+			<!-- Rows -->
+			<Frame name="$parentRows" inherits="KTrackerSliderTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parentRowsLabel" relativePoint="BOTTOM">
+						<Offset><AbsDimension x="0" y="-5" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+
+			<!-- Spacing Box -->
+			<EditBox name="$parentHSpacingValue" inherits="KTrackerEditBoxTemplate" numeric="true" letters="3">
+				<Size><AbsDimension x="35" y="25" /></Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentHSpacingLabel" relativePoint="RIGHT">
+						<Offset><AbsDimension x="0" y="2" /></Offset>
+					</Anchor>
+				</Anchors>
+				<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
+				<TextInsets left="2" right="2" top="2" bottom="2" />
+			</EditBox>
+
+			<!-- Spacing Slider -->
+			<Slider name="$parentHSpacing" inherits="OptionsSliderTemplate" minValue="0.0" maxValue="250.0" defaultValue="0.0" valueStep="1.0">
+				<Size><AbsDimension x="100" y="15" /></Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentHSpacingLabel" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-5" /></Offset>
+					</Anchor>
+					<Anchor point="TOPRIGHT" relativeTo="$parentHSpacingLabel" relativePoint="BOTTOMRIGHT">
+						<Offset><AbsDimension x="0" y="-5" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(self:GetName() .. "Low"):SetText("0")
+						getglobal(self:GetName() .. "High"):SetText("250")
+					</OnLoad>
+				</Scripts>
+			</Slider>
+
+			<!-- Spacing Box -->
+			<EditBox name="$parentVSpacingValue" inherits="KTrackerEditBoxTemplate" numeric="true" letters="3">
+				<Size><AbsDimension x="35" y="25" /></Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentVSpacingLabel" relativePoint="RIGHT">
+						<Offset><AbsDimension x="0" y="2" /></Offset>
+					</Anchor>
+				</Anchors>
+				<FontString inherits="GameFontHighlightSmall" justifyH="CENTER" />
+				<TextInsets left="2" right="2" top="2" bottom="2" />
+			</EditBox>
+
+			<!-- Spacing Slider -->
+			<Slider name="$parentVSpacing" inherits="OptionsSliderTemplate" minValue="0.0" maxValue="250.0" defaultValue="0.0" valueStep="1.0">
+				<Size><AbsDimension x="100" y="15" /></Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentVSpacingLabel" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-5" /></Offset>
+					</Anchor>
+					<Anchor point="TOPRIGHT" relativeTo="$parentVSpacingLabel" relativePoint="BOTTOMRIGHT">
+						<Offset><AbsDimension x="0" y="-5" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(self:GetName() .. "Low"):SetText("0")
+						getglobal(self:GetName() .. "High"):SetText("250")
+					</OnLoad>
+				</Scripts>
+			</Slider>
+
+			<CheckButton name="$parentEnabled" inherits="KTrackerCheckButtonTemplate" checked="true">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentEnabledLabel" relativePoint="TOPLEFT">
+						<Offset><AbsDimension x="-2.5" y="3" /></Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+
+			<CheckButton name="$parentCombat" inherits="KTrackerCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentCombatLabel" relativePoint="TOPLEFT">
+						<Offset><AbsDimension x="-2.5" y="3" /></Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+
+			<Button name="$parentSaveBtn" inherits="KTrackerButtonTemplate" text="SAVE">
+				<Size><AbsDimension x="70" y="25" /></Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset><AbsDimension x="15" y="15" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<Button name="$parentCancelBtn" inherits="KTrackerButtonTemplate" text="CANCEL">
+				<Size><AbsDimension x="70" y="25" /></Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentSaveBtn" relativePoint="RIGHT">
+						<Offset><AbsDimension x="3" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+			<!-- AddOn Sync -->
+			<CheckButton name="$parentSyncBtn" inherits="OptionsCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentScrollFrame" relativePoint="BOTTOMLEFT">
+						<Offset><AbsDimension x="0" y="-8" /></Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+
+			<!-- Minimap Button -->
+			<CheckButton name="$parentMinimapBtn" inherits="OptionsCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parentScrollFrame" relativePoint="BOTTOM">
+						<Offset><AbsDimension x="-50" y="-8" /></Offset>
+					</Anchor>
+				</Anchors>
+			</CheckButton>
+
+			<!-- Lock/Unlock -->
+			<Button name="$parentLockBtn" inherits="KTrackerButtonTemplate" text="Lock">
+				<Size><AbsDimension x="65" y="25" /></Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentScrollFrame" relativePoint="BOTTOMRIGHT">
+						<Offset><AbsDimension x="20" y="-5" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts><OnClick>KTracker:Toggle()</OnClick></Scripts>
+			</Button>
+
+			<!-- Reset Addon -->
+			<Button name="$parentResetBtn" inherits="KTrackerButtonTemplate" text="RESET">
+				<Size><AbsDimension x="65" y="25" /></Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="$parentLockBtn" relativePoint="LEFT">
+						<Offset><AbsDimension x="-3" y="0" /></Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+
+		</Frames>
+		<Scripts><OnLoad>KTracker:ConfigOnLoad(self)</OnLoad></Scripts>
+	</Frame>
+
+</Ui>
