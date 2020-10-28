@@ -1,0 +1,8 @@
+_dummy/*
+_backup/*
+*.sublime-workspace
+*.sublime-project
+KTracker-1.0.1.lua
+KTracker-1.1.2.lua
+KTracker-1.2.0.lua
+KTracker-back.lua
